@@ -1,5 +1,6 @@
 import { styled } from "..";
 
+
 export const HomeContainer = styled("main", {
     display: "flex",
     maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))',  
@@ -8,9 +9,10 @@ export const HomeContainer = styled("main", {
     minHeight: 656,
 });
 
-export const Product = styled('a', {
+export const Product = styled('div', {
     background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
     borderRadius: 8,
+    gap: 48,
     cursor: 'pointer',
     position: 'relative',
     display: 'flex',
@@ -43,6 +45,7 @@ export const Product = styled('a', {
 
         strong: {
             fontSize: '$md',
+            color: '$gray100'
         },
 
         span: {
