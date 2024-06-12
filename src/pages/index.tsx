@@ -15,7 +15,7 @@ interface HomeProps {
     id: string
     name: string
     image: string
-    price: number
+    price: string
   }[]
 }
 
