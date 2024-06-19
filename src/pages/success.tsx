@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { ImageContainer, SuccessContainer } from "../../styles/pages/success";
-import { useParams } from "next/navigation";
 import { GetServerSideProps } from "next";
 import { stripe } from "../lib/stripe";
 import Stripe from "stripe";
 import Image from "next/image";
+import Head from "next/head";
+
 
 interface SuccessProps {
   custumerName: string;
@@ -16,18 +17,24 @@ interface SuccessProps {
 
 export default function Success ({custumerName, product} : SuccessProps) {
     return (
-      <SuccessContainer>
-        <h1>Compra efetuada</h1>
-        <ImageContainer>
-          <Image src={product.imageURL} width={120} height={110} alt="" />
-        </ImageContainer>
+      <>
+        <Head>
+          <title>Compra efetuada | Iginte Shop</title>
+          <meta name="noRobots" content="noindex" />
+        </Head>
+        <SuccessContainer>
+          <h1>Compra efetuada</h1>
+          <ImageContainer>
+            <Image src={product.imageURL} width={120} height={110} alt="" />
+          </ImageContainer>
 
-        <p>Uhuul <strong>{custumerName}</strong>, sua <strong>{product.name}</strong> já está a caminho da sua casa. </p>
+          <p>Uhuul <strong>{custumerName}</strong>, sua <strong>{product.name}</strong> já está a caminho da sua casa. </p>
 
-        <Link href="/">
-          	Voltar ao catálogo
-        </Link>
-      </SuccessContainer>
+          <Link href="/">
+              Voltar ao catálogo
+          </Link>
+        </SuccessContainer>
+      </>
     )
   }
   
