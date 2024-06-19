@@ -5,6 +5,8 @@ import { GetStaticProps } from "next"
 import { stripe } from "../../lib/stripe"
 import Stripe from "stripe"
 import { useRouter } from "next/router"
+import axios from "axios"
+import { useState } from "react"
 
 interface ProductProps {
   product: {
@@ -18,14 +20,28 @@ interface ProductProps {
 }
 
 export default function Product ({product} : ProductProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
   const { isFallback } = useRouter()
 
   if (isFallback) {
     return <h1>Carregando...</h1>
   }
 
-  function handleBuyProduct() {
-    console.log(product.defaultPriceId)
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true)
+      const response:any = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId
+      })
+
+      const { checkoutURL } = response.data
+
+      window.location.href = checkoutURL
+      
+    } catch (error) {
+      setIsCreatingCheckoutSession(false)
+      alert('Falha ao redirecionar para o checkout.')
+    }
     
   }
 
@@ -39,7 +55,7 @@ export default function Product ({product} : ProductProps) {
         <span>{product.price}</span>
         <p>{product.description}</p>
 
-        <button onClick={handleBuyProduct}>Comprar agora</button>
+        <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>Comprar agora</button>
       </ProductDetails>
     </ProductContainer>
   )
